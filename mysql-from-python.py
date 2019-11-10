@@ -1,4 +1,5 @@
 import os
+import datetime
 import pymysql
 
 #Get username from Cloud9 workspace
@@ -14,11 +15,9 @@ connection = pymysql.connect(host='localhost',
                             
 try:
     #Run a query
-    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        sql = "SELECT * FROM Genre;"
-        cursor.execute(sql)
-        for row in cursor:
-            print(row)
+    with connection.cursor() as cursor:
+        row = cursor.execute("DELETE FROM Friends WHERE name = %s;", "Bob")
+        connection.commit()
 finally:
     #Close the connection, regardless of whether the above 
     #was successfull
